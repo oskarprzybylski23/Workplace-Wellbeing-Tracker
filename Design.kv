@@ -1,0 +1,155 @@
+<WelcomeScreen>:
+    GridLayout:
+        cols: 1
+        padding: 60, 60
+        spacing: 20, 20
+        GridLayout:
+            cols: 1
+
+
+            Label:
+                text: "Welcome to the workplace wellbeing app!"
+                font_size: '40px'
+            Label:
+                text: "Choose your position below"
+                font_size: '20px'
+        GridLayout:
+            cols: 2
+            padding: 15, 15
+            spacing: 20, 50
+            size_hint: 1, 0.5
+            Button:
+                text: "Employee"
+                on_press: root.employee()
+                size_hint: 0.1, 0.1
+            Button:
+                text: "Employer"
+                on_press: root.employer()
+                size_hint: 0.1, 0.1
+
+<EmployeeScreen>
+    GridLayout:
+        cols: 1
+        padding: 60, 60
+        spacing: 30, 30
+        Label:
+            text: "Hi, good to see you today! Let's look into your work-life balance"
+        TextInput:
+            id: name
+            hint_text: "Your first and last name"
+            input_type: 'text'
+            multiline: False
+            on_text: self.readonly = True if len(self.text.strip()) == 50 else False
+            size_hint: 0.4, 0.6
+
+        TextInput:
+            id: workload
+            hint_text: "How do you rate your workload this week on a scale 1-5?"
+            input_type: 'number'
+            multiline: False
+            input_filter: 'int'
+            size_hint: 0.4, 0.6
+        RelativeLayout:
+            Button:
+                text: "Submit"
+                on_press: root.submit(root.ids.name.text, root.ids.workload.text)
+                size_hint: 0.3, 0.6
+                pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+
+        GridLayout:
+            cols: 2
+
+            Button:
+                text: "Return"
+                on_press: root.previous()
+                size_hint: 0.3, 0.5
+            Button:
+                text: "Exit"
+                on_press: root.exit()
+                size_hint: 0.3, 0.5
+
+<Submit_SuccessScreen>
+    GridLayout:
+        cols: 1
+        padding: 60, 60
+        spacing: 30, 30
+        Label:
+            text: "Thank you for your submission! Press 'Next' to see your summary, or press 'exit' to close the app"
+
+        GridLayout:
+            cols: 2
+
+            Button:
+                text: "Next"
+                on_press: root.next()
+                size_hint: 0.1, 0.3
+            Button:
+                text: "Exit"
+                on_press: root.exit()
+                size_hint: 0.1, 0.3
+
+<Employee_SummaryScreen>
+    GridLayout:
+        cols: 1
+        adding: 60, 60
+
+        Label:
+            text: "Here is summary of your workload"
+
+<EmployerScreen>
+    GridLayout:
+        cols: 1
+        padding: 60, 60
+
+        Label:
+            text: "Hi, good to see you today! Let's look into your team's wellbeing!"
+
+        GridLayout:
+            cols: 2
+            spacing: 30, 30
+            rows: 4
+            Button:
+                text: "All employees"
+                on_press: root.all()
+
+            Button:
+                text: "Choose employee"
+                on_press: root.single()
+
+
+            Button:
+                text: "Return"
+                on_press: root.previous()
+
+            Button:
+                text: "Exit"
+                on_press: root.exit()
+
+<ChooseScreen>
+    GridLayout:
+        cols: 1
+        Label:
+            text: "Choose employee to examine"
+
+<AllScreen>
+    GridLayout:
+        cols: 1
+        Label:
+            text: "Data across your company"
+
+
+<RootWidget>
+    WelcomeScreen:
+        name: "welcome_screen"
+    EmployeeScreen:
+        name: "employee_screen"
+    EmployerScreen:
+        name: "employer_screen"
+    ChooseScreen:
+        name: "choose_screen"
+    AllScreen:
+        name: "all_screen"
+    Submit_SuccessScreen:
+        name: "submit_success_screen"
+    Employee_SummaryScreen:
+        name: "employee_summary_screen"
