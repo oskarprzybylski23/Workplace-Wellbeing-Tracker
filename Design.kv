@@ -1,3 +1,4 @@
+#:import Factory kivy.factory.Factory
 <WelcomeScreen>:
     GridLayout:
         cols: 1
@@ -70,7 +71,7 @@
 
 <Submit_SuccessScreen>
     GridLayout:
-        cols: 1
+        rows: 3
         padding: 60, 60
         spacing: 30, 30
         Label:
@@ -90,11 +91,35 @@
 
 <Employee_SummaryScreen>
     GridLayout:
-        cols: 1
-        adding: 60, 60
-
+        rows: 3
+        padding: 10, 10
+        spacing: 30, 30
         Label:
-            text: "Here is summary of your workload"
+            text: "Here is your work related stress summary"
+            size_hint: 0.2, 0.2
+
+        BoxLayout:
+            id: box
+            size_hint: 1, 1
+
+        GridLayout:
+            cols: 3
+            size_hint: 0.2, 0.2
+            Button:
+                text: "save graph"
+                size_hint: 0.1, 0.3
+                on_press: root.save()
+
+            Button:
+                text: "send to your line-manager"
+                size_hint: 0.1, 0.3
+
+            Button:
+                text: "exit"
+                on_press: root.exit()
+                size_hint: 0.1, 0.3
+
+
 
 <EmployerScreen>
     GridLayout:
@@ -128,15 +153,99 @@
 <ChooseScreen>
     GridLayout:
         cols: 1
+
+        TextInput:
+            id: employee_choice
+            hint_text: "Type first and last name of the employee"
+            input_type: 'text'
+            multiline: False
+            on_text: self.readonly = True if len(self.text.strip()) == 50 else False
+            size_hint: 0.4, 0.6
+
         Label:
-            text: "Choose employee to examine"
+            id: prompt
+            text: ""
+            font_size: 16
+            color: "red"
+
+        GridLayout:
+            cols: 2
+            Button:
+                text: "Choose"
+                on_press: root.choose(root.ids.employee_choice.text)
+                size_hint: 0.1, 0.3
+
+            Button:
+                text: "Return"
+                size_hint: 0.1, 0.3
+                on_press: root.previous()
+
+<EmployeeGraphScreen>
+    GridLayout:
+        rows: 3
+        padding: 10, 10
+        spacing: 30, 30
+        Label:
+            text: "Here is work related stress summary for the chosen employee" #consider adding specific name
+            size_hint: 0.2, 0.2
+
+        BoxLayout:
+            id: box
+            size_hint: 1, 1
+
+        GridLayout:
+            cols: 2
+            size_hint: 0.2, 0.2
+            Button:
+                text: "save graph"
+                size_hint: 0.1, 0.3
+                on_press: root.save()
+
+            Button:
+                text: "contact the employee"
+                size_hint: 0.1, 0.3
+
+            Button:
+                text: "another employee"
+                size_hint: 0.1, 0.3
+                on_press: root.another()
+
+            Button:
+                text: "exit"
+                on_press: root.exit()
+                size_hint: 0.1, 0.3
 
 <AllScreen>
     GridLayout:
-        cols: 1
+        rows: 3
+        padding: 10, 10
+        spacing: 30, 30
         Label:
-            text: "Data across your company"
+            text: "Have a look at stress levels across your company"
+            size_hint: 0.2, 0.2
 
+        BoxLayout:
+            id: box
+            size_hint: 1, 1
+
+        GridLayout:
+            cols: 3
+            size_hint: 0.2, 0.2
+            Button:
+                text: "save graph"
+                size_hint: 0.1, 0.3
+                on_press: root.save()
+
+
+            Button:
+                text: "return"
+                size_hint: 0.1, 0.3
+                on_press: root.previous()
+
+            Button:
+                text: "exit"
+                on_press: root.exit()
+                size_hint: 0.1, 0.3
 
 <RootWidget>
     WelcomeScreen:
@@ -153,3 +262,5 @@
         name: "submit_success_screen"
     Employee_SummaryScreen:
         name: "employee_summary_screen"
+    EmployeeGraphScreen:
+        name: "employee_graph_screen"
